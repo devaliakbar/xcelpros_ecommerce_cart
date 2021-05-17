@@ -1,0 +1,1 @@
+class UnExpectedException implements Exception {}
