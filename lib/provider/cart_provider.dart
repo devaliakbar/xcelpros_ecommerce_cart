@@ -1,4 +1,4 @@
-import 'package:ecommerce/features/cart/domain/entities/cart_item.dart';
+import 'package:ecommerce/models/cart_item.dart';
 import 'package:flutter/material.dart';
 
 enum CartOperation { increment, decrement }
