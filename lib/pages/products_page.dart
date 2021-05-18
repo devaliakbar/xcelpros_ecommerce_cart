@@ -1,10 +1,13 @@
 import 'package:ecommerce/models/cart_item.dart';
+import 'package:ecommerce/pages/cart_page.dart';
 import 'package:ecommerce/provider/cart_provider.dart';
 import 'package:ecommerce/models/product.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsPage extends StatelessWidget {
+  static const String routeName = '/products_page';
+
   final List<Product> products = [];
 
   ProductsPage() {
@@ -97,7 +100,7 @@ class _CartIcon extends StatelessWidget {
       margin: EdgeInsets.only(right: 15),
       child: InkWell(
         onTap: () {
-          Navigator.pushNamed(context, '/cart');
+          Navigator.pushNamed(context, CartPage.routeName);
         },
         child: Stack(
           children: [
