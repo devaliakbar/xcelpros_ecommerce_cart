@@ -2,7 +2,6 @@ import 'package:ecommerce/config/graphql_config.dart';
 import 'package:ecommerce/helper/graphql_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginProvider extends ChangeNotifier {
   final GraphQLClient _graphQLClient = GraphQLConfig().getPublicClient();
@@ -18,12 +17,9 @@ class LoginProvider extends ChangeNotifier {
     );
 
     if (!result.hasException) {
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
-      await sharedPreferences.setString(
-          "authorization", result.data['user_loginUser']['access_token']);
-      await sharedPreferences.setString(
-          "refresh_token", result.data['user_loginUser']['refresh_token']);
+      await GraphQLConfig().saveUserTokens(
+          authorization: result.data['user_loginUser']['access_token'],
+          refreshToken: result.data['user_loginUser']['refresh_token']);
 
       return true;
     } else {

@@ -1,4 +1,6 @@
+import 'package:ecommerce/config/graphql_config.dart';
 import 'package:ecommerce/models/feed.dart';
+import 'package:ecommerce/pages/home_page.dart';
 import 'package:ecommerce/provider/feed_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,12 +10,18 @@ class FeedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<FeedProvider>(context, listen: false).fetchAllFeeds();
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Feed"),
         actions: [
           FlatButton(
-            onPressed: () {},
+            onPressed: () {
+              GraphQLConfig().signOut();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  HomePage.routeName, (Route<dynamic> route) => false);
+            },
             child: Text(
               'Sign Out',
               style: TextStyle(color: Colors.white),

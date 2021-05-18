@@ -1,8 +1,8 @@
+import 'package:ecommerce/config/graphql_config.dart';
 import 'package:ecommerce/pages/feed_page.dart';
 import 'package:ecommerce/provider/login_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/login_page';
@@ -76,9 +76,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> checkAlredyLogin() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    if (sharedPreferences.getString("authorization") != null) {
+    if (await GraphQLConfig().isUserLogedIn()) {
       Navigator.of(context).pushNamedAndRemoveUntil(
           FeedPage.routeName, (Route<dynamic> route) => false);
     } else {

@@ -45,4 +45,19 @@ mutation {
 }
         """;
   }
+
+  static const String refreshToken = """
+mutation {
+  user_getTokens {
+    access_token
+    refresh_token
+  }
+}
+  """;
+
+  static const String signOutQuery = """
+{
+  user_logout
+}
+  """;
 }

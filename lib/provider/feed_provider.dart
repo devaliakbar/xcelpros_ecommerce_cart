@@ -9,14 +9,14 @@ class FeedProvider extends ChangeNotifier {
 
   GraphQLClient _graphQLClient;
 
-  FeedProvider() {
+  Future<void> fetchAllFeeds() async {
     GraphQLConfig().getPrivateClient().then((value) {
       _graphQLClient = value;
-      fetchAllFeeds();
+      _fetch();
     });
   }
 
-  Future<void> fetchAllFeeds() async {
+  Future<void> _fetch() async {
     QueryResult result = await _graphQLClient.query(
       QueryOptions(
         document: gql(
@@ -32,6 +32,10 @@ class FeedProvider extends ChangeNotifier {
       });
     } else {
       print(result.exception.toString());
+      // if (error == "TOKEN EXPIRE") {
+      //   await GraphQLConfig().refreshToken();
+      //   fetchAllFeeds();
+      // }
     }
 
     notifyListeners();
