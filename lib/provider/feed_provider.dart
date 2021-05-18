@@ -7,10 +7,11 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 class FeedProvider extends ChangeNotifier {
   List<Feed> feeds;
 
+  final GraphQLConfig _graphQLConfig = GraphQLConfig();
   GraphQLClient _graphQLClient;
 
   Future<void> fetchAllFeeds() async {
-    GraphQLConfig().getPrivateClient().then((value) {
+    _graphQLConfig.getPrivateClient().then((value) {
       _graphQLClient = value;
       _fetch();
     });
@@ -33,7 +34,7 @@ class FeedProvider extends ChangeNotifier {
     } else {
       print(result.exception.toString());
       // if (error == "TOKEN EXPIRE") {
-      //   await GraphQLConfig().refreshToken();
+      //   await _graphQLConfig.refreshToken();
       //   fetchAllFeeds();
       // }
     }

@@ -4,7 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class LoginProvider extends ChangeNotifier {
-  final GraphQLClient _graphQLClient = GraphQLConfig().getPublicClient();
+  final GraphQLConfig _graphQLConfig = GraphQLConfig();
+  GraphQLClient _graphQLClient;
+
+  LoginProvider() {
+    _graphQLClient = _graphQLConfig.getPublicClient();
+  }
 
   Future<bool> login(
       {@required String email, @required String password}) async {
@@ -17,7 +22,7 @@ class LoginProvider extends ChangeNotifier {
     );
 
     if (!result.hasException) {
-      await GraphQLConfig().saveUserTokens(
+      await _graphQLConfig.saveUserTokens(
           authorization: result.data['user_loginUser']['access_token'],
           refreshToken: result.data['user_loginUser']['refresh_token']);
 

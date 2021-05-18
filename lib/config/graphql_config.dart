@@ -52,8 +52,6 @@ class GraphQLConfig {
   }
 
   Future<void> refreshToken() async {
-    _privateClient = null;
-
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final String refreshToken = sharedPreferences.getString("refresh_token");
 
@@ -73,6 +71,12 @@ class GraphQLConfig {
       await saveUserTokens(
           authorization: result.data['user_getTokens']['access_token'],
           refreshToken: result.data['user_getTokens']['refresh_token']);
+
+      _privateClient = GraphQLClient(
+          link: HttpLink(graphQLEndPoint, defaultHeaders: {
+            "authorization": result.data['user_getTokens']['access_token']
+          }),
+          cache: GraphQLCache());
     }
   }
 
