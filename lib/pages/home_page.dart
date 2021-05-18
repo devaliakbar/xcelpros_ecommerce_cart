@@ -1,4 +1,5 @@
 import 'package:ecommerce/pages/graphql_demo_page.dart';
+import 'package:ecommerce/pages/login_page.dart';
 import 'package:ecommerce/pages/products_page.dart';
 import 'package:flutter/material.dart';
 
@@ -26,6 +27,12 @@ class HomePage extends StatelessWidget {
                   Navigator.pushNamed(context, GraphQlDemoPage.routeName);
                 },
                 child: Text("Graphql Demo"),
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, LoginPage.routeName);
+                },
+                child: Text("Graphql Mutation"),
               ),
             ],
           ),

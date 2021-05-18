@@ -7,13 +7,13 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 class GraphQLDemoProvider extends ChangeNotifier {
   List<GraphQLDemo> datas;
 
-  final GraphQLClient _graphQLClient = GraphQLConfig().clientToQuery();
+  final GraphQLClient _graphQLClient = GraphQLConfig().getPublicClient();
 
   Future<void> getDatas() async {
     QueryResult result = await _graphQLClient.query(
       QueryOptions(
         document: gql(
-          GraphQLQueryHelper.getAllData,
+          GraphQLQueryHelper.getGraphQLDemoQuery,
         ),
       ),
     );

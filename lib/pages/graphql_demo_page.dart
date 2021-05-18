@@ -8,7 +8,7 @@ class GraphQlDemoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<GraphQLDemoProvider>(context).getDatas();
+    Provider.of<GraphQLDemoProvider>(context, listen: false).getDatas();
 
     return Scaffold(
       appBar: AppBar(

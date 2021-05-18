@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   provider:
   graphql_flutter:
+  shared_preferences:
 
 dev_dependencies:
   flutter_test:
