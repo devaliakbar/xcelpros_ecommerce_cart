@@ -8,6 +8,7 @@ import 'package:ecommerce/pages/products_page.dart';
 import 'package:ecommerce/provider/feed_provider.dart';
 import 'package:ecommerce/provider/graphql_demo_provider.dart';
 import 'package:ecommerce/provider/login_provider.dart';
+import 'package:ecommerce/provider/repositories/feed_repository.dart';
 import 'package:ecommerce/provider/repositories/login_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,10 @@ void main() {
     providers: [
       ChangeNotifierProvider(create: (context) => CartProvider()),
       ChangeNotifierProvider(create: (context) => GraphQLDemoProvider()),
-      ChangeNotifierProvider(create: (context) => FeedProvider()),
+      ChangeNotifierProvider(
+          create: (context) => FeedProvider(
+                feedRepository: FeedRepository(),
+              )),
       ChangeNotifierProvider(
         create: (context) => LoginProvider(
           loginRepository: LoginRepository(),

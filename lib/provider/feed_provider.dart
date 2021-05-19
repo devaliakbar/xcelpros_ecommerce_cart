@@ -1,38 +1,19 @@
-import 'package:ecommerce/config/graphql_config.dart';
-import 'package:ecommerce/helper/graphql_helper.dart';
 import 'package:ecommerce/models/feed.dart';
+import 'package:ecommerce/provider/repositories/feed_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 
 class FeedProvider extends ChangeNotifier {
+  final FeedRepository feedRepository;
+
+  FeedProvider({@required this.feedRepository});
+
   List<Feed> feeds;
 
-  final GraphQLConfig _graphQLConfig = GraphQLConfig();
-  GraphQLClient _graphQLClient;
-
   Future<void> fetchAllFeeds() async {
-    _graphQLConfig.getPrivateClient().then((value) {
-      _graphQLClient = value;
-      _fetch();
-    });
-  }
-
-  Future<void> _fetch() async {
-    QueryResult result = await _graphQLClient.query(
-      QueryOptions(
-        document: gql(
-          GraphQLQueryHelper.getFeedsQuery,
-        ),
-      ),
-    );
-
-    if (!result.hasException) {
-      feeds = [];
-      result.data['post_getHomePageFeed']['items'].forEach((element) {
-        feeds.add(Feed.fromJson(element));
-      });
-    } else {
-      print(result.exception.toString());
+    try {
+      feeds = await feedRepository.fetchAllFeeds();
+    } catch (e) {
+      print(e.toString());
       //TODO CHECK AUTH ERROR
       // GraphQLConfig().signOut();
     }
