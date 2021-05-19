@@ -4,7 +4,7 @@ import 'package:ecommerce/pages/products_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatelessWidget {
-  static const String routeName = '/';
+  static const String routeName = '/home_page';
 
   @override
   Widget build(BuildContext context) {

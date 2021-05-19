@@ -17,6 +17,7 @@ class FeedPage extends StatelessWidget {
         title: Text("Feed"),
         actions: [
           FlatButton(
+            key: Key("signOutBtnKey"),
             onPressed: () {
               GraphQLConfig().signOut();
               Navigator.of(context).pushNamedAndRemoveUntil(
@@ -37,7 +38,9 @@ class FeedPage extends StatelessWidget {
                 Widget child) {
               if (feedProvider.feeds == null) {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularProgressIndicator(
+                    key: Key("loadingKey"),
+                  ),
                 );
               } else {
                 return ListView.builder(
