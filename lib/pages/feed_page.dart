@@ -41,15 +41,16 @@ class FeedPage extends StatelessWidget {
                 );
               } else {
                 return ListView.builder(
-                    itemCount: feedProvider.feeds.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      Feed feed = feedProvider.feeds[index];
-                      return ListTile(
-                        title: Text(feed.postTitle),
-                        dense: true,
-                        subtitle: Text(feed.postDescription),
-                      );
-                    });
+                  itemCount: feedProvider.feeds.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    Feed feed = feedProvider.feeds[index];
+                    return ListTile(
+                      title: Text(feed.postTitle),
+                      dense: true,
+                      subtitle: Text(feed.postDescription),
+                    );
+                  },
+                );
               }
             },
           ),

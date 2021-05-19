@@ -48,11 +48,13 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(fontSize: 22),
                     ),
                     TextField(
+                      key: Key("emailKey"),
                       decoration: InputDecoration(labelText: "Email"),
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailController,
                     ),
                     TextField(
+                      key: Key("passwordKey"),
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: "Password",
@@ -63,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 30,
                     ),
                     RaisedButton(
+                      key: Key("loginBtnKey"),
                       onPressed: login,
                       child: _isLoginButtonLoading
                           ? CircularProgressIndicator()
@@ -76,14 +79,19 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> checkAlredyLogin() async {
-    if (await GraphQLConfig().isUserLogedIn()) {
-      Navigator.of(context).pushNamedAndRemoveUntil(
-          FeedPage.routeName, (Route<dynamic> route) => false);
-    } else {
-      setState(() {
-        _isLoading = false;
-      });
-    }
+    // if (await GraphQLConfig().isUserLogedIn()) {
+    //   Navigator.of(context).pushNamedAndRemoveUntil(
+    //       FeedPage.routeName, (Route<dynamic> route) => false);
+    // } else {
+    //   setState(() {
+    //     _isLoading = false;
+    //   });
+    // }
+    //FOR TESTING PURPOSE
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   Future<void> login() async {
@@ -99,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
       showInSnackBar("Please enter password");
       return;
     }
-
+    return;
     setState(() {
       _isLoginButtonLoading = true;
     });
@@ -120,7 +128,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void showInSnackBar(String value) {
-    _scaffoldKey.currentState
-        .showSnackBar(new SnackBar(content: new Text(value)));
+    _scaffoldKey.currentState.showSnackBar(new SnackBar(
+      content: new Text(value),
+      duration: Duration(seconds: 2),
+    ));
   }
 }

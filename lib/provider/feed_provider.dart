@@ -33,10 +33,8 @@ class FeedProvider extends ChangeNotifier {
       });
     } else {
       print(result.exception.toString());
-      // if (error == "TOKEN EXPIRE") {
-      //   await _graphQLConfig.refreshToken();
-      //   fetchAllFeeds();
-      // }
+      //TODO CHECK AUTH ERROR
+      // GraphQLConfig().signOut();
     }
 
     notifyListeners();
