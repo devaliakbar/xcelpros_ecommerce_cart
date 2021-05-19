@@ -30,6 +30,7 @@ dependencies:
   provider:
   graphql_flutter:
   shared_preferences:
+  mockito:
 
 dev_dependencies:
   flutter_test:

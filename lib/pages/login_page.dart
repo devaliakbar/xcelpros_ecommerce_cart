@@ -1,4 +1,3 @@
-import 'package:ecommerce/config/graphql_config.dart';
 import 'package:ecommerce/pages/feed_page.dart';
 import 'package:ecommerce/provider/login_provider.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    checkAlredyLogin();
+    _checkAlredyLogin();
   }
 
   @override
@@ -78,20 +77,16 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> checkAlredyLogin() async {
-    // if (await GraphQLConfig().isUserLogedIn()) {
-    //   Navigator.of(context).pushNamedAndRemoveUntil(
-    //       FeedPage.routeName, (Route<dynamic> route) => false);
-    // } else {
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
-    // }
-    //FOR TESTING PURPOSE
-
-    setState(() {
-      _isLoading = false;
-    });
+  Future<void> _checkAlredyLogin() async {
+    if (await Provider.of<LoginProvider>(context, listen: false)
+        .checkAlredyLogin()) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          FeedPage.routeName, (Route<dynamic> route) => false);
+    } else {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   Future<void> login() async {
@@ -107,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
       showInSnackBar("Please enter password");
       return;
     }
-    return;
+
     setState(() {
       _isLoginButtonLoading = true;
     });
@@ -128,9 +123,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void showInSnackBar(String value) {
-    _scaffoldKey.currentState.showSnackBar(new SnackBar(
-      content: new Text(value),
-      duration: Duration(seconds: 2),
-    ));
+    _scaffoldKey.currentState.showSnackBar(
+      new SnackBar(
+        content: new Text(value),
+        duration: Duration(seconds: 2),
+      ),
+    );
   }
 }
