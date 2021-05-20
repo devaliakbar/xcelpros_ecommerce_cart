@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class LoginRepository {
-  final GraphQLConfig _graphQLConfig = GraphQLConfig();
+  final GraphQLConfig graphQLConfig;
+
   GraphQLClient _graphQLClient;
 
-  LoginRepository() {
-    _graphQLClient = _graphQLConfig.getPublicClient();
+  LoginRepository({@required this.graphQLConfig}) {
+    _graphQLClient = graphQLConfig.getPublicClient();
   }
 
   Future<bool> login(
@@ -22,7 +23,7 @@ class LoginRepository {
     );
 
     if (!result.hasException) {
-      await _graphQLConfig.saveUserTokens(
+      await graphQLConfig.saveUserTokens(
           authorization: result.data['user_loginUser']['access_token'],
           refreshToken: result.data['user_loginUser']['refresh_token']);
 
@@ -33,6 +34,6 @@ class LoginRepository {
   }
 
   Future<bool> checkAlredyLogin() async {
-    return await _graphQLConfig.isUserLogedIn();
+    return await graphQLConfig.isUserLogedIn();
   }
 }

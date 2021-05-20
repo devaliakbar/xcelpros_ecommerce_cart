@@ -1,3 +1,4 @@
+import 'package:ecommerce/config/graphql_config.dart';
 import 'package:ecommerce/pages/cart_page.dart';
 import 'package:ecommerce/pages/feed_page.dart';
 import 'package:ecommerce/pages/graphql_demo_page.dart';
@@ -14,17 +15,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  final GraphQLConfig graphQLConfig = GraphQLConfig();
+
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => CartProvider()),
       ChangeNotifierProvider(create: (context) => GraphQLDemoProvider()),
       ChangeNotifierProvider(
           create: (context) => FeedProvider(
-                feedRepository: FeedRepository(),
+                feedRepository: FeedRepository(graphQLConfig: graphQLConfig),
               )),
       ChangeNotifierProvider(
         create: (context) => LoginProvider(
-          loginRepository: LoginRepository(),
+          loginRepository: LoginRepository(graphQLConfig: graphQLConfig),
         ),
       ),
     ],
