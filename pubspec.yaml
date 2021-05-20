@@ -30,11 +30,12 @@ dependencies:
   provider:
   graphql_flutter:
   shared_preferences:
-  mockito:
 
 dev_dependencies:
-  flutter_test:
+  flutter_driver:
     sdk: flutter
+  mockito:
+  test:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

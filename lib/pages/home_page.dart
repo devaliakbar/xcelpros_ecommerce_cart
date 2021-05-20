@@ -17,18 +17,23 @@ class HomePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               RaisedButton(
+                key: Key("productBtnKey"),
                 onPressed: () {
                   Navigator.pushNamed(context, ProductsPage.routeName);
                 },
-                child: Text("Products"),
+                child: Text(
+                  "Products",
+                ),
               ),
               RaisedButton(
+                key: Key("graphqlDemoBtnKey"),
                 onPressed: () {
                   Navigator.pushNamed(context, GraphQlDemoPage.routeName);
                 },
                 child: Text("Graphql Demo"),
               ),
               RaisedButton(
+                key: Key("graphqlMutationDemoBtnKey"),
                 onPressed: () {
                   Navigator.pushNamed(context, LoginPage.routeName);
                 },

@@ -19,10 +19,14 @@ class GraphQlDemoPage extends StatelessWidget {
             GraphQLDemoProvider graphQLDemoProvider, Widget child) {
           if (graphQLDemoProvider.datas == null) {
             return Center(
-              child: Text("Loading ..."),
+              child: Text(
+                "Loading ...",
+                key: Key("loading"),
+              ),
             );
           }
           return ListView.builder(
+              key: Key("demoList"),
               itemCount: graphQLDemoProvider.datas.length,
               itemBuilder: (BuildContext context, int index) {
                 GraphQLDemo data = graphQLDemoProvider.datas[index];

@@ -28,9 +28,9 @@ class CartPage extends StatelessWidget {
                     itemCount: cart.cartItems.length,
                     itemBuilder: (BuildContext context, int index) {
                       return _buildCartTile(
-                        context: context,
-                        cartItem: cart.cartItems[index],
-                      );
+                          context: context,
+                          cartItem: cart.cartItems[index],
+                          index: index);
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return Divider();
@@ -43,7 +43,9 @@ class CartPage extends StatelessWidget {
   }
 
   Widget _buildCartTile(
-      {@required BuildContext context, @required CartItem cartItem}) {
+      {@required BuildContext context,
+      @required CartItem cartItem,
+      @required int index}) {
     return ListTile(
       dense: true,
       title: Text(cartItem.name),
@@ -51,6 +53,7 @@ class CartPage extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           FlatButton(
+            key: Key("${index}_decrement_btn"),
             onPressed: () {
               Provider.of<CartProvider>(context, listen: false).addToCart(
                   newCartItem: cartItem, opCode: CartOperation.decrement);
@@ -59,8 +62,10 @@ class CartPage extends StatelessWidget {
           ),
           Text(
             "${cartItem.quantity}",
+            key: Key("${index}_qty"),
           ),
           FlatButton(
+            key: Key("${index}_increment_btn"),
             onPressed: () {
               Provider.of<CartProvider>(context, listen: false).addToCart(
                   newCartItem: cartItem, opCode: CartOperation.increment);

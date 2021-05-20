@@ -11,7 +11,7 @@ class ProductsPage extends StatelessWidget {
   final List<Product> products = [];
 
   ProductsPage() {
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 50; i++) {
       products.add(Product(id: "${i + 1}", name: "Product ${i + 1}"));
     }
   }
@@ -30,12 +30,11 @@ class ProductsPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: ListView.separated(
+          key: Key("productList"),
           itemCount: products.length,
           itemBuilder: (BuildContext context, int index) {
             return _buildProductTile(
-              context: context,
-              product: products[index],
-            );
+                context: context, product: products[index], index: index);
           },
           separatorBuilder: (BuildContext context, int index) {
             return Divider();
@@ -46,14 +45,20 @@ class ProductsPage extends StatelessWidget {
   }
 
   Widget _buildProductTile(
-      {@required BuildContext context, @required Product product}) {
+      {@required BuildContext context,
+      @required Product product,
+      @required int index}) {
     return ListTile(
       dense: true,
-      title: Text(product.name),
+      title: Text(
+        product.name,
+        key: Key("${index}_label"),
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           FlatButton(
+            key: Key("${index}_decrement_btn"),
             onPressed: () {
               Provider.of<CartProvider>(context, listen: false).addToCart(
                   newCartItem:
@@ -75,10 +80,12 @@ class ProductsPage extends StatelessWidget {
 
               return Text(
                 "$quantity",
+                key: Key("${index}_qty"),
               );
             },
           ),
           FlatButton(
+            key: Key("${index}_increment_btn"),
             onPressed: () {
               Provider.of<CartProvider>(context, listen: false).addToCart(
                   newCartItem:
@@ -99,6 +106,7 @@ class _CartIcon extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(right: 15),
       child: InkWell(
+        key: Key("cartBtn"),
         onTap: () {
           Navigator.pushNamed(context, CartPage.routeName);
         },
@@ -117,6 +125,7 @@ class _CartIcon extends StatelessWidget {
                 return Text(
                   "${cart.cartItems.length}",
                   style: TextStyle(color: Colors.white),
+                  key: Key("cart_count"),
                 );
               },
             )

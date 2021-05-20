@@ -44,6 +44,7 @@ class FeedPage extends StatelessWidget {
                 );
               } else {
                 return ListView.builder(
+                  key: Key("feedList"),
                   itemCount: feedProvider.feeds.length,
                   itemBuilder: (BuildContext context, int index) {
                     Feed feed = feedProvider.feeds[index];
