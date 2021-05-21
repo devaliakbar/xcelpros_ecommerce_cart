@@ -1,4 +1,5 @@
 import 'package:ecommerce/config/graphql_config.dart';
+import 'package:ecommerce/error/exceptions.dart';
 import 'package:ecommerce/helper/graphql_helper.dart';
 import 'package:ecommerce/models/feed.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,12 @@ class FeedRepository {
 
       return feeds;
     }
+
+    if (result.exception.toString().contains("Unauthorized")) {
+      _graphQLConfig.signOut();
+      throw UnAuthorizedException();
+    }
+
     throw result.exception;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ecommerce/config/graphql_config.dart';
 import 'package:ecommerce/models/feed.dart';
 import 'package:ecommerce/pages/home_page.dart';
@@ -36,13 +38,31 @@ class FeedPage extends StatelessWidget {
           child: Consumer<FeedProvider>(
             builder: (BuildContext context, FeedProvider feedProvider,
                 Widget child) {
-              if (feedProvider.feeds == null) {
+              if (feedProvider.loginState == LoginState.logOut) {
+                Timer(Duration(milliseconds: 1), () async {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                      HomePage.routeName, (Route<dynamic> route) => false);
+                });
+              }
+
+              if (feedProvider.loginState == LoginState.errorState) {
                 return Center(
-                  child: CircularProgressIndicator(
-                    key: Key("loadingKey"),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Failed to fetch'),
+                      RaisedButton(
+                        onPressed: () {
+                          feedProvider.retry();
+                        },
+                        child: Text("Retry"),
+                      )
+                    ],
                   ),
                 );
-              } else {
+              }
+
+              if (feedProvider.loginState == LoginState.loaded) {
                 return ListView.builder(
                   key: Key("feedList"),
                   itemCount: feedProvider.feeds.length,
@@ -56,6 +76,11 @@ class FeedPage extends StatelessWidget {
                   },
                 );
               }
+              return Center(
+                child: CircularProgressIndicator(
+                  key: Key("loadingKey"),
+                ),
+              );
             },
           ),
         ),
